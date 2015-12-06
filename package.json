@@ -1,0 +1,44 @@
+{
+  "name": "adventofcode",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.es5.js",
+  "scripts": {
+    "coverage": "isparta cover _mocha index.js -- --require babel/register",
+    "precoveralls": "npm run coverage",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "test": "mocha",
+    "tdd": "npm test -- --watch",
+    "transpile": "babel index.js --out-file index.es5.js",
+    "prepublish": "npm run transpile",
+    "clean": "rimraf index.es5.js",
+    "push": "git push --follow-tags",
+    "postpublish": "npm-run-all clean push",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimchez/adventofcode.git"
+  },
+  "keywords": [
+    ""
+  ],
+  "author": "Dmitry Demyankov <dmitry.demyankov@gmail.com> (https://github.com/dimchez)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dimchez/adventofcode/issues"
+  },
+  "homepage": "https://github.com/dimchez/adventofcode#readme",
+  "devDependencies": {
+    "babel": "5.8.23",
+    "chai": "3.4.1",
+    "coveralls": "2.11.4",
+    "isparta": "4.0.0",
+    "mocha": "2.3.4",
+    "npm-run-all": "1.3.3",
+    "rimraf": "2.4.4"
+  },
+  "dependencies": {
+    "es6-promise": "^3.0.2"
+  }
+}
