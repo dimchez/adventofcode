@@ -46,8 +46,8 @@ function calculateVolume(dimentions) {
 }
 
 function calculateRibbonLength(dimentions) {
-  dimentions.sort((a, b) => Number(a) - Number(b));
-  return 2 * dimentions[0] + 2 * dimentions[1];
+  const sorted = [].concat(dimentions).sort((a, b) => Number(a) - Number(b));
+  return 2 * sorted[0] + 2 * sorted[1];
 }
 
 function split(line) {
