@@ -39,6 +39,6 @@
     "rimraf": "2.4.4"
   },
   "dependencies": {
-    "es6-promise": "^3.0.2"
+    "es6-promise": "3.0.2"
   }
 }
