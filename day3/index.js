@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 export default function day3() {
-  const input = fs.readFileSync('./day3/input.txt', 'utf8');
+  const input = fs.readFileSync('./day3/input.txt', 'utf8').trim();
   return Promise.resolve({
     partOne: convertPathToVisits(input).length,
     partTwo: convertPathToVisitsTurnBased(input).length
@@ -9,15 +9,18 @@ export default function day3() {
 }
 
 export function convertPathToVisits(input) {
-  return [...input.trim()]
-    .reduce(pathToVisits, [{ x: 0, y:0, visited: 1 }])
-    .filter(isVisited);
+  return processInput(input, pathToVisits, [{ x: 0, y:0 }]);
 }
 
 export function convertPathToVisitsTurnBased(input) {
-  return [...input.trim()]
-    .reduce(pathToVisitsTurnBased, [{ x: 0, y:0, visited: 2 }])
-    .filter(isVisited);
+  return processInput(input, pathToVisitsTurnBased, [{ x: 0, y:0, visited: 2 }])
+}
+
+function processInput(input, reducer, accumulator) {
+  return [...input]
+    .reduce(reducer, accumulator)
+    .sort(sortCoordinates)
+    .reduce(countUniqueVisits, []);
 }
 
 function pathToVisitsTurnBased(result, char, index) {
@@ -26,18 +29,20 @@ function pathToVisitsTurnBased(result, char, index) {
 }
 
 function pathToVisits(result, char, index) {
-  const coords = getCoordinates(char, result[index]);
-  const prevIndex = result.findIndex(({x, y}) => coords.x === x && coords.y === y);
-  if (prevIndex === -1) {
-    return [...result, Object.assign({}, coords, { visited: 1 })];
+  result.push(getCoordinates(char, result[index]));
+  return result;
+}
+
+function countUniqueVisits(result, coord) {
+  const { x, y } = result.length ? result[result.length - 1] : {};
+
+  if (x === coord.x && y === coord.y) {
+    result[result.length - 1].visited += 1;
+  } else {
+    result.push(Object.assign({}, coord, { visited: 1 }));
   }
 
-  return [
-    ...result.slice(0, prevIndex),
-    Object.assign({}, coords, { visited: result[prevIndex].visited + 1 }),
-    ...result.slice(prevIndex + 1),
-    coords
-  ];
+  return result;
 }
 
 function getCoordinates(char, {x, y}) {
@@ -52,6 +57,12 @@ function getCoordinates(char, {x, y}) {
   }
 }
 
-function isVisited({ visited }) {
-  return !!visited;
+function sortCoordinates(coord1, coord2) {
+  if (coord1.x === coord2.x && coord1.y === coord2.y) {
+    return 0;
+  } else if(coord1.x < coord2.x ||
+      (coord1.x === coord2.x && coord1.y < coord2.y)) {
+    return -1;
+  }
+  return 1;
 }
