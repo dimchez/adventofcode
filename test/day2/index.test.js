@@ -1,6 +1,7 @@
-import { calculateSurfaceAreaWithSlack, calculateTotalRibbonLength, calculateTotalResults } from './../../day2';
+import day2, { calculateSurfaceAreaWithSlack, calculateTotalRibbonLength, calculateTotalResults } from './../../day2';
 import { expect } from 'chai';
 
+const day2Results = { partOne: 1598415, partTwo: 3812909 };
 const dimentions = ['4', '3', '2'];
 const expectedSurfaceArea = 58;
 const expectedRibbonLength = 34;
@@ -8,6 +9,8 @@ const expectedResults = { partOne: expectedSurfaceArea, partTwo: expectedRibbonL
 const initial = { partOne: 0, partTwo: 0 };
 
 describe('day2', () => {
+  it('should return expected values', done => day2().then(results => expect(results).to.deep.equal(day2Results)).then(() => done()));
+
   describe('calculateSurfaceAreaWithSlack', () =>
     it('should calculate total surface area with slack', () => expect(calculateSurfaceAreaWithSlack(...dimentions)).to.equal(expectedSurfaceArea)));
 
