@@ -10,11 +10,6 @@ export default function day4() {
   return Promise.resolve({ partOne, partTwo });
 }
 
-export function calculateHash(input, prefix, startWith = 0) {
-  let next = startWith;
-  while(!md5(input + next).startsWith(prefix)) {
-    next++;
-  }
-
-  return next;
+export function calculateHash(input, prefix, suffix = 0) {
+  return md5(input + suffix).startsWith(prefix) ? suffix : calculateHash(input,prefix, suffix + 1);
 }
