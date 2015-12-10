@@ -5,7 +5,9 @@ const day3Results = { partOne: 2592, partTwo: 2360 };
 
 describe('day3', () => {
   it('should return expected values', done =>
-    day3().then(result => expect(result).to.deep.equal(day3Results)).then(() => done()));
+    day3()
+      .then(result => expect(result).to.deep.equal(day3Results))
+      .then(() => done()));
 
   describe('convertPathToVisits', () =>
     it('should convert path to visits', () => expect(convertPathToVisits('^>v<^').length).to.equal(4)));
